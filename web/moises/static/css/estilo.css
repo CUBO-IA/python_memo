@@ -1,0 +1,263 @@
+/* ============================================================
+   THE LEGEND OF MOISES — estilos de la pagina
+   Los colores son los mismos que usa el juego.
+   ============================================================ */
+
+:root {
+  --negro: #000000;
+  --blanco: #fcfcfc;
+  --arena: #fcd8a8;
+  --cafe: #c84c0c;
+  --cafe-oscuro: #582000;
+  --rosa-titulo: #e4b4ac;
+  --dorado: #e4ac38;
+  --dorado-claro: #fce078;
+  --rojo: #d82800;
+  --azul: #2038ec;
+  --verde: #80d010;
+  --gris: #747474;
+
+  --letra-juego: "Press Start 2P", "Courier New", monospace;
+  --letra-texto: "Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif;
+
+  --ancho: 60rem;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+
+body {
+  margin: 0;
+  background: var(--negro);
+  color: var(--cafe-oscuro);
+  font-family: var(--letra-texto);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* Mantiene los pixeles nitidos al agrandar las imagenes del juego */
+.pixel { image-rendering: pixelated; image-rendering: crisp-edges; }
+
+.solo-lectores {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+a:focus-visible { outline: 3px solid var(--dorado-claro); outline-offset: 3px; }
+
+/* ---------- Barra de arriba (HUD) ---------- */
+
+.hud {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 1.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--negro);
+  color: var(--blanco);
+  font-family: var(--letra-juego);
+  font-size: 0.625rem;
+}
+
+.hud-mapa {
+  flex: none; position: relative;
+  width: 3.75rem; height: 2.25rem;
+  background: var(--gris);
+}
+.hud-mapa span {
+  position: absolute; left: 44%; bottom: 14%;
+  width: 0.4rem; height: 0.4rem; background: var(--verde);
+}
+
+.hud-menu { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; flex: 1; }
+.hud-menu a {
+  color: var(--blanco); text-decoration: none; text-transform: uppercase;
+  padding: 0.35rem 0;
+}
+.hud-menu a:hover { color: var(--dorado-claro); }
+
+.hud-vida { flex: none; color: var(--rojo); text-align: left; }
+.hud-vida div { display: flex; gap: 0.15rem; margin-top: 0.4rem; }
+.hud-vida img { width: 1rem; image-rendering: pixelated; }
+
+/* ---------- Portada ---------- */
+
+.portada {
+  background: var(--rosa-titulo);
+  padding: 2rem 1rem 3rem;
+  text-align: center;
+}
+.portada-imagen { width: min(100%, 48rem); margin: 0 auto; }
+
+.empezar {
+  display: inline-block; margin-top: 2rem;
+  font-family: var(--letra-juego); font-size: 0.875rem;
+  color: #3c2828; text-decoration: none; text-transform: uppercase;
+  animation: parpadeo 1s steps(1) infinite;
+}
+.empezar:hover, .empezar:focus-visible { animation: none; color: var(--cafe); }
+
+@keyframes parpadeo { 50% { opacity: 0; } }
+
+/* Franja de rocas hecha con el mismo cuadro del juego */
+.muro {
+  height: 48px;
+  background: url("../img/tile_piedra.png") repeat-x;
+  background-size: 48px 48px;
+  image-rendering: pixelated;
+}
+
+/* ---------- Bloques de contenido ---------- */
+
+.bloque { padding: 4rem 1.25rem; }
+.bloque > * { max-width: var(--ancho); margin-left: auto; margin-right: auto; }
+
+.arena { background: var(--arena); color: var(--cafe-oscuro); }
+.noche { background: var(--negro); color: var(--blanco); }
+.centrado { text-align: center; }
+
+h2, h3 { font-family: var(--letra-juego); font-weight: 400; line-height: 1.5; }
+
+h2 {
+  font-size: clamp(1.125rem, 3.2vw, 1.75rem);
+  margin: 0 auto 2rem;
+  text-transform: uppercase;
+}
+.arena h2 { color: var(--cafe); text-shadow: 3px 3px 0 var(--cafe-oscuro); }
+.noche h2 { color: var(--dorado); }
+
+h3 { font-size: 0.875rem; text-transform: uppercase; }
+
+p { margin: 0 0 1.25rem; max-width: 34rem; }
+.centrado p { margin-left: auto; margin-right: auto; }
+.bloque > p { max-width: var(--ancho); }
+
+.nota {
+  border-left: 6px solid var(--cafe);
+  padding-left: 1rem;
+  font-size: 1rem;
+}
+
+.dos-columnas {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+}
+
+figure { margin: 0; }
+figure img { width: 100%; border: 6px solid var(--negro); }
+figcaption {
+  margin-top: 0.75rem;
+  font-family: var(--letra-juego); font-size: 0.625rem; text-transform: uppercase;
+}
+figure.ancha { max-width: 36rem; margin-top: 3rem; }
+
+/* ---------- Controles ---------- */
+
+.controles { list-style: none; padding: 0; margin-top: 0; margin-bottom: 3.5rem; }
+.controles li {
+  display: grid; grid-template-columns: minmax(0, 22rem) 1fr; gap: 1.5rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 2px solid #2a2a2a;
+}
+.teclas { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+.teclas small { font-family: var(--letra-juego); font-size: 0.625rem; color: var(--gris); margin-left: 0.4rem; }
+
+kbd {
+  display: inline-block; min-width: 2.5rem; padding: 0.7rem 0.6rem;
+  font-family: var(--letra-juego); font-size: 0.75rem; text-align: center;
+  color: var(--blanco);
+  border: 2px solid var(--azul);
+  box-shadow: 0 4px 0 var(--azul);
+}
+
+.accion { font-size: 1.25rem; }
+
+.noche h3 { color: var(--rojo); margin: 0 auto 1.25rem; }
+
+.trucos { padding-left: 1.25rem; margin-top: 0; }
+.trucos li { margin-bottom: 0.75rem; max-width: 38rem; }
+.trucos li::marker { color: var(--dorado); }
+
+/* ---------- Enemigos ---------- */
+
+.enemigos {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+}
+.enemigo img { width: 6rem; height: 6rem; margin-bottom: 1rem; }
+.enemigo h3 { color: var(--cafe-oscuro); margin: 0 0 0.5rem; }
+.enemigo p { font-size: 1rem; margin-bottom: 0.5rem; }
+.enemigo .golpes {
+  font-family: var(--letra-juego); font-size: 0.625rem;
+  color: var(--rojo); text-transform: uppercase;
+}
+
+/* ---------- Mapa ---------- */
+
+#mapa { padding-top: 0; }
+.entrada { margin-bottom: 2rem; }
+
+.mapa {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: 6px solid var(--negro);
+  background: var(--negro);
+}
+.sala { position: relative; }
+.sala img { width: 100%; }
+.sala span {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  padding: 0.5rem 0.6rem;
+  background: var(--negro); color: var(--dorado-claro);
+  font-family: var(--letra-juego); font-size: clamp(0.4rem, 1.2vw, 0.625rem);
+  text-transform: uppercase; white-space: nowrap;
+}
+
+/* ---------- Descargar ---------- */
+
+.tesoro { width: 5rem; margin: 0 auto 1.5rem; }
+
+.proximamente {
+  display: inline-block;
+  font-family: var(--letra-juego); font-size: clamp(1rem, 4vw, 1.5rem);
+  color: var(--negro); background: var(--gris);
+  padding: 1.25rem 1.75rem; margin-bottom: 2rem;
+  text-transform: uppercase;
+  box-shadow: 0 6px 0 #3a3a3a;
+}
+
+.boton {
+  display: inline-block; margin-top: 0.5rem;
+  font-family: var(--letra-juego); font-size: 0.75rem; text-transform: uppercase;
+  color: var(--dorado-claro); text-decoration: none;
+  border: 2px solid var(--dorado); padding: 1rem 1.25rem;
+}
+.boton:hover { background: var(--dorado); color: var(--negro); }
+
+/* ---------- Pie ---------- */
+
+.pie {
+  background: var(--negro); color: var(--gris);
+  text-align: center; padding: 2rem 1.25rem 3rem;
+  font-family: var(--letra-juego); font-size: 0.5rem; line-height: 2;
+}
+.pie p { max-width: none; margin: 0; }
+
+/* ---------- Pantallas chicas ---------- */
+
+@media (max-width: 48rem) {
+  .hud { flex-wrap: wrap; gap: 0.75rem 1rem; }
+  .hud-menu { order: 3; flex-basis: 100%; }
+  .hud-vida { margin-left: auto; }
+  html { scroll-padding-top: 8rem; }
+
+  .bloque { padding: 3rem 1.25rem; }
+  .dos-columnas { grid-template-columns: 1fr; gap: 2rem; }
+  .controles li { grid-template-columns: 1fr; gap: 0.6rem; }
+  .enemigos { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Respeta a quien pidio menos movimiento en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .empezar { animation: none; }
+}

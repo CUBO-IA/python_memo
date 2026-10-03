@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Legend of Moises</title>
+  <meta name="description" content="Una aventura estilo NES hecha con Python y pygame.">
+  <link rel="icon" href="{{ url_for('static', filename='img/triangulo.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+
+  <!-- La barra de arriba imita la del juego: minimapa, menu y vida -->
+  <header class="hud">
+    <a class="hud-mapa" href="#inicio" aria-label="Volver al inicio"><span></span></a>
+    <nav class="hud-menu" aria-label="Secciones">
+      <a href="#historia">Historia</a>
+      <a href="#controles">Controles</a>
+      <a href="#enemigos">Enemigos</a>
+      <a href="#mapa">Mapa</a>
+      <a href="#descargar">Descargar</a>
+    </nav>
+    <div class="hud-vida" aria-hidden="true">
+      <span>-VIDA-</span>
+      <div>
+        {% for _ in range(3) %}
+        <img src="{{ url_for('static', filename='img/corazon.png') }}" alt="">
+        {% endfor %}
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="portada" id="inicio">
+      <h1 class="solo-lectores">The Legend of Moises</h1>
+      <img class="pixel portada-imagen"
+           src="{{ url_for('static', filename='img/titulo.png') }}"
+           width="256" height="240"
+           alt="Pantalla de título del juego: The Legend of Moises">
+      <a class="empezar" href="#historia">Push start button</a>
+    </section>
+
+    <div class="muro" aria-hidden="true"></div>
+
+    <section class="bloque arena" id="historia">
+      <div class="dos-columnas">
+        <div>
+          <h2>Es peligroso ir solo</h2>
+          <p>
+            Empezás sin nada. En la primera pantalla hay una cueva oscura, y adentro
+            un viejo te entrega una espada.
+          </p>
+          <p>
+            Desde ahí el mapa es tuyo: nueve pantallas de bosques, lagos y rocas,
+            cada una con sus enemigos. Al norte espera el guardián. Vencelo y
+            recuperá el Triángulo Dorado.
+          </p>
+          <p class="nota">
+            Una aventura estilo NES hecha con Python y pygame. Todos los dibujos
+            del juego están escritos en el código, píxel por píxel.
+          </p>
+        </div>
+        <figure>
+          <img class="pixel"
+               src="{{ url_for('static', filename='img/pantalla_cueva.png') }}"
+               width="256" height="240"
+               alt="El héroe dentro de la cueva, frente al viejo y la espada">
+          <figcaption>La cueva del inicio</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="bloque noche" id="controles">
+      <h2>Controles</h2>
+      <ul class="controles">
+        {% for control in controles %}
+        <li>
+          <span class="teclas">
+            {% for tecla in control.teclas %}<kbd>{{ tecla }}</kbd>{% endfor %}
+            {% if control.extra %}<small>{{ control.extra }}</small>{% endif %}
+          </span>
+          <span class="accion">{{ control.accion }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <h3>Lo que conviene saber</h3>
+      <ul class="trucos">
+        {% for truco in trucos %}
+        <li>{{ truco }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="bloque arena" id="enemigos">
+      <h2>Enemigos</h2>
+      <div class="enemigos">
+        {% for enemigo in enemigos %}
+        <article class="enemigo">
+          <img class="pixel"
+               src="{{ url_for('static', filename='img/' + enemigo.imagen) }}"
+               alt="">
+          <h3>{{ enemigo.nombre }}</h3>
+          <p class="golpes">
+            {{ enemigo.golpes }} {{ "golpe" if enemigo.golpes == 1 else "golpes" }}
+          </p>
+          <p>{{ enemigo.descripcion }}</p>
+        </article>
+        {% endfor %}
+      </div>
+
+      <figure class="ancha">
+        <img class="pixel"
+             src="{{ url_for('static', filename='img/pantalla_pelea.png') }}"
+             width="256" height="240"
+             alt="El héroe ataca con la espada, rodeado de pulpos y saltarines">
+        <figcaption>El cruce del centro del mapa</figcaption>
+      </figure>
+    </section>
+
+    <section class="bloque arena" id="mapa">
+      <h2>El mapa completo</h2>
+      <p class="entrada">
+        Nueve pantallas. Al cruzar un borde, la pantalla se desliza a la vecina.
+      </p>
+      <div class="mapa">
+        {% for sala in mapa %}
+        <div class="sala">
+          <img class="pixel"
+               src="{{ url_for('static', filename='img/' + sala.imagen) }}"
+               width="256" height="176" alt="">
+          {% if sala.marca %}<span>{{ sala.marca }}</span>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <div class="muro" aria-hidden="true"></div>
+
+    <section class="bloque noche centrado" id="descargar">
+      <img class="pixel tesoro"
+           src="{{ url_for('static', filename='img/triangulo.png') }}" alt="">
+      <h2>Descargar</h2>
+      <p class="proximamente">Coming soon</p>
+      <p>
+        La versión para Mac todavía no está lista para descargar.
+        Mientras tanto, el código completo está en GitHub.
+      </p>
+      <a class="boton" href="{{ repositorio }}">Ver en GitHub</a>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p>Hecho con Python y pygame en el bootcamp de CUBO AI · El Salvador, 2026</p>
+  </footer>
+
+</body>
+</html>
