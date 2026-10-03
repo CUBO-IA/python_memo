@@ -1,0 +1,7 @@
+# Entornos virtuales y archivos generados: no se suben a GitHub
+venv/
+build/
+dist/
+__pycache__/
+*.pyc
+.DS_Store
